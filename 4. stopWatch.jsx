@@ -9,11 +9,9 @@ const ACTION = {
 const App = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [timeValue, setTimeValue] = useState();
 
   const handleTimer = (action) => {
-    setTime(parseInt(timeValue));
-    if (action === ACTION.START || action === ACTION.RESET) {
+    if (action === ACTION.START) {
         setIsRunning(true);
     } else if (action === ACTION.STOP) {
         setIsRunning(false);
@@ -33,7 +31,7 @@ const App = () => {
     return () => clearInterval(interval);
   });
 
-  const giveTime = (time) => {
+  const getTime = (time) => {
     let hrs = Math.floor(time / 3600);
     let mns = Math.floor((time % 3600) / 60);
     let sec = Math.floor(time % 60);
@@ -44,12 +42,13 @@ const App = () => {
   return (
     <div>
       <h1>Stopwatch</h1>
-      <h2>{giveTime(time)}</h2>
+      <h2>{getTime(time)}</h2>
       <input
         type={"number"}
         placeholder="Enter time"
-        value={timeValue}
-        onChange={(e) => setTimeValue(e.target.value)}
+        onChange={(e) => {
+            setTime(parseInt(e.target.value) || 0);
+        }}
       />
       <button onClick={() => handleTimer(ACTION.START)}> start </button>
       <button onClick={() => handleTimer(ACTION.STOP)}> stop </button>
