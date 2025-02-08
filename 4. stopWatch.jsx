@@ -29,7 +29,7 @@ const App = () => {
       }, 1000);
     }
     return () => clearInterval(interval);
-  });
+  }, [isRunning]);
 
   const getTime = (time) => {
     let hrs = Math.floor(time / 3600);
